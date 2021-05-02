@@ -166,7 +166,7 @@ def DBA_update(center, series, cost_mat, path_mat, delta_mat):
     return np.divide(updated_center, n_elements)
 
 
-df = pd.read_csv("ECG200_TRAIN", header=None, delim_whitespace=True)
+df = pd.read_csv("ECG200_TRAIN", header=None, delim_whitespace=True, index_col=0)
 series = df.to_numpy()
 
 # plotting the synthetic data
