@@ -2,10 +2,9 @@
 
 This project is the final project of 2110430 Time Series Mining and Knowledge Discovery in Semester 2/2020
 
+## Part I: Optimal weight for DTW distance calculation
 
-## Part I
-
-## Part II: Shape Averaging
+## Part II: Shape averaging method
 The project is about shape averaging method of multiple time series sequences. The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
 
 The implemented python code ```dba.py``` got from [fpetitjean/DBA](https://github.com/fpetitjean/DBA) based on the papers below
