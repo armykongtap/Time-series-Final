@@ -168,18 +168,20 @@ def DBA_update(center, series, cost_mat, path_mat, delta_mat):
 
 if __name__ == "__main__":
     df = pd.read_csv("ECG200_TRAIN", header=None, delim_whitespace=True, index_col=0)
-    series = df.to_numpy()
+
+    series = {k: v for k, v in df.groupby(level=0)}
 
     # plotting the synthetic data
-    for s in series:
-        plt.plot(range(0, len(s)), s)
-    plt.draw()
+    for k, v in series.items():
+        v.T.plot(legend=False, use_index=False, title=k)
 
     # calculating average series with DBA
-    average_series = performDBA(series)
-
-    # plotting the average series
     plt.figure()
-    plt.plot(range(0, len(average_series)), average_series)
+
+    for k, v in series.items():
+        average_series = performDBA(v.to_numpy())
+        plt.plot(range(0, len(average_series)), average_series, label=str(int(k)))
+
+    plt.legend()
     plt.show()
 
