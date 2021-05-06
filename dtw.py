@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import math
-from itertools import combinations_with_replacement
+from itertools import product
 
 def read_input(folder='/content'):
     train = pd.read_csv("ECG200_TRAIN", header=None, index_col=0, delim_whitespace=True)
@@ -65,6 +65,6 @@ def predict(train,test,w1,w2,w3):
 train,test = read_input()
 weight = [0, 1, 2, 3]
 
-for i in combinations_with_replacement(weight,3):
+for i in product(weight, repeat=3):
   y_pred,confusion_matrix,accuracy = predict(train,test,i[0],i[1],i[2])
   print(f"{i}: Accuracy is {accuracy}")
