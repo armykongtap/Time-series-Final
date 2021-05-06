@@ -12,7 +12,7 @@ In the DTW distance calculation between two time series sequences, regarding Sak
 
 The project is about shape averaging method of multiple time series sequences. The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
 
-The implemented python code ```dba.py``` got from [fpetitjean/DBA](https://github.com/fpetitjean/DBA) based on the papers below
+The implemented python code ```dba.py``` modified from [fpetitjean/DBA](https://github.com/fpetitjean/DBA) based on the papers below
 * [Pattern Recognition 2011](http://francois-petitjean.com/Research/Petitjean2011-PR.pdf): A global averaging method for Dynamic Time Warping 
 (DOI: [10.1016/j.patcog.2010.09.013](https://doi.org/10.1016/j.patcog.2010.09.013))
 * [ICDM 2014](http://francois-petitjean.com/Research/Petitjean2014-ICDM-DTW.pdf): Dynamic Time Warping Averaging of Time Series allows Faster and more Accurate Classification
