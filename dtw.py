@@ -1,98 +1,70 @@
-from collections import defaultdict
+import pandas as pd
+import numpy as np
+import math
 from itertools import combinations_with_replacement
 
-import numpy as np
-import pandas as pd
+def read_input(folder='/content'):
+    train = pd.read_csv("ECG200_TRAIN", header=None, index_col=0, delim_whitespace=True)
+    train = train.T.reset_index(drop=True).T
+    train.index.name = "label"
+    train = [(train.index[i],train.values.tolist()[i]) for i in range(len(train))]
 
-import dba
+    test = pd.read_csv("ECG200_TEST", header=None, index_col=0, delim_whitespace=True)
+    test = test.T.reset_index(drop=True).T
+    test.index.name = "label"
+    test = [(test.index[i],test.values.tolist()[i]) for i in range(len(test))]
 
-df = pd.read_csv("ECG200_TRAIN", header=None, index_col=0, delim_whitespace=True)
-df = df.T.reset_index(drop=True).T
-df.index.name = "label"
+    return train, test
 
-#%%
-# Find the represent of data group
-def _dba(df):
-    series = df.to_numpy()
-    avg_series = dba.performDBA(series)
-    return pd.DataFrame([avg_series])
+def matrix(n, m=None, default=0):
+    m = m or n
+    return [[default] * m for _ in range(n)]
 
-
-df_dba = df.groupby("label").apply(_dba).reset_index(level=1, drop=True)
-
-#%%
-
-
-def custom_dtw(s, t, w1=1, w2=1, w3=1):
+from scipy.spatial import distance
+def dtw_sakoe_chiba(s, t,w1,w2,w3, w=7):
     n, m = len(s), len(t)
-    dtw_matrix = np.zeros((n + 1, m + 1))
-    for i in range(n + 1):
-        for j in range(m + 1):
-            dtw_matrix[i, j] = np.inf
-    dtw_matrix[0, 0] = 0
+    w = abs(n - m) + w
+    dtw = matrix(n, m, default=math.inf)
+    dtw[0][0] = 0
 
-    for i in range(1, n + 1):
-        for j in range(1, m + 1):
-            cost = abs(s[i - 1] - t[j - 1])
-            # take last min from a square box
-            last_min = np.min(
-                [
-                    w1 * dtw_matrix[i - 1, j],
-                    w2 * dtw_matrix[i, j - 1],
-                    w3 * dtw_matrix[i - 1, j - 1],
-                ]
-            )
-            dtw_matrix[i, j] = cost + last_min
-    return dtw_matrix[-1, -1]
+    for i in range(1, n):
+        min_row_score = math.inf
+        for j in range(max(1, i-w), min(m, i+w)):
+            cost = distance.euclidean(s[i], t[j])
+            dtw[i][j] = min( (w1*cost)+dtw[i][j-1],(w2*cost)+ dtw[i-1][j-1],(w3*cost)+dtw[i-1][j])
+            min_row_score = min(min_row_score, dtw[i][j])
 
+    return dtw[-1][-1]
 
-def classify_dtw(s, df, *args) -> float:
-    """
-    Input
-        - s: Series of data to classify
-        - df: Dataframe represent group of data
-    """
-    res = None
-    dis = np.inf
+def predict(train,test,w1,w2,w3):   
+    y_pred = []
+    confusion_matrix = {}
 
-    for index, row in df.iterrows():
-        d = custom_dtw(s, row, *args)
-        if d < dis:
-            res = index
-            dis = d
+    labels = np.unique([label for label, _ in train])
+    for l1 in labels:
+        confusion_matrix[l1] = {}
+        for l2 in labels:
+            confusion_matrix[l1][l2] = 0
 
-    return res
+    for tsl, t in test:
+        pred_label, min_score = -1, math.inf
 
+        for trl, s in train:
+            score = dtw_sakoe_chiba(s, t,w1,w2,w3)
+            if score < min_score:
+                min_score = score
+                pred_label = trl
 
-#%%
-# # Test
-# df = pd.read_csv("ECG200_TEST", header=None, index_col=0, delim_whitespace=True)
-# df = df.T.reset_index(drop=True).T
-# df.index.name = "label"
+        confusion_matrix[tsl][pred_label] = confusion_matrix[tsl][pred_label] + 1
 
-# result = df.apply(classify_dtw, axis=1, args=(df_dba,))
+        y_pred.append(tsl == pred_label)
 
-# result = result.to_frame("predict")
-# result = result.reset_index()
+    accuracy = (confusion_matrix[-1.0][-1.0]+confusion_matrix[1.0][1.0])/len(y_pred)
+    return y_pred,confusion_matrix,accuracy
 
-# accuracy = (result["predict"] == result["label"]).sum() / result.shape[0]
+train,test = read_input()
+weight = [0, 1, 2, 3]
 
-# print(f"Accuracy is {accuracy}")
-
-#%%
-# Test with diff weight
-df = pd.read_csv("ECG200_TEST", header=None, index_col=0, delim_whitespace=True)
-df = df.T.reset_index(drop=True).T
-df.index.name = "label"
-
-wieghts = [1, 2, 3]
-
-for i in combinations_with_replacement(wieghts, len(wieghts)):
-    result = df.apply(classify_dtw, axis=1, args=(df_dba, *i))
-
-    result = result.to_frame("predict")
-    result = result.reset_index()
-
-    accuracy = (result["predict"] == result["label"]).sum() / result.shape[0]
-
-    print(f"{i}: Accuracy is {accuracy}")
+for i in combinations_with_replacement(weight,3):
+  y_pred,confusion_matrix,accuracy = predict(train,test,i[0],i[1],i[2])
+  print(f"{i}: Accuracy is {accuracy}")
