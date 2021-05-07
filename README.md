@@ -6,9 +6,11 @@ The project is seperated in 2 parts below.
 
 ## Part I: Optimal weight for DTW distance calculation
 
-In the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055)), ...
+In the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055)), we modified the weights to find that what is the optimal values of the weights that make the accuracy better. Moreover, we considered other cells instead of the three modified neighboring cells and find out the effect on the classification accuracy
 
 The implemented python codes ```dtw.py``` and ```dtw_p.py``` modified from ```dtw.py``` in [eug/dynamic-time-warping](https://github.com/eug/dynamic-time-warping) 
+
+The summary is, we can't find the optimal values of the weights, but we can ...
 
 ## Part II: Shape averaging method
 
