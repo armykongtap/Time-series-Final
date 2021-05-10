@@ -4,9 +4,9 @@ This project is the final project of 2110430 Time Series Mining and Knowledge Di
 
 The project is seperated in 2 parts below.
 
-## Part I: Optimal weight for DTW distance calculation
+## Part 1: Optimal weight for DTW distance calculation
 
-This part is to experiment the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))
+This part is to experiment the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper: Dynamic programming algorithm optimization for spoken word recognition (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))
 
 In classification tasks in the dataset, we will classify the time series datasets into many classes, by considering the distance between the sequences. Thus, before making classification tasks, we have to complete the distance tasks.
 
@@ -18,11 +18,17 @@ Credit: GUNA, J. et al. (DOI: [10.1007/s11042-013-1635-1](https://doi.org/10.100
 
 But in many cases, e.g. spoken words (from Sakoe and Chiba (1978)'s paper), the euclidean method will give the inaccurate distance, because this type of time series sequences usually gave the distort shape, so that Euclidean distance might gave the bad results.
 
-One of the accurate way of distance tasks is DTW algorithm. To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how far between two time series sequences. 
+One of the accurate way of distance tasks is DTW algorithm. To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how far between two time series sequences by matching the points that will give the smallest distance.
 
 ![DTW: Dynamic Time Warping](https://upload.wikimedia.org/wikipedia/commons/a/ab/Dynamic_time_warping.png)\
 *Dynamic Time Warping (DTW)\
 Credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:Dynamic_time_warping.png)*
+
+In Sakoe and Chiba (1978)'s paper
+
+![Caption](img/)\
+*Caption\
+Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*
 
 In this project, we make an experiment by modifying the weights to find that what is the optimal values of the weights that make the accuracy better. Moreover, we considered other cells instead of the three modified neighboring cells and find out the effect on the classification accuracy
 
@@ -31,9 +37,12 @@ The implemented python codes ```dtw.py``` and ```dtw_p.py``` modified from ```dt
 Our experiment is on the ECG200 datasets, that are attached in this repo.
 
 We seperated the test into 2 parts.
-(A) 
+### 1a: 
 
 The summary is, we can't find the optimal values of the weights, but we can find that the weight that have the most significantly affect to the classification accuracy is 
+
+### 1b:
+
 
 ## Part II: Shape averaging method
 
