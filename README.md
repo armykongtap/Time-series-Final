@@ -6,6 +6,7 @@ The project is seperated in 2 parts below.
 
 ## Part I: Optimal weight for DTW distance calculation
 
+<<<<<<< HEAD
 In the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))
 
 To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how far between two time series sequences. The easiest way to calculating is 
@@ -16,6 +17,12 @@ Credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:Dynamic_time_warping
 
 In this project, we make an experiment by modifying the weights to find that what is the optimal values of the weights that make the accuracy better. Moreover, we considered other cells instead of the three modified neighboring cells and find out the effect on the classification accuracy
 
+=======
+In the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055)), we modified the weights to find that what is the optimal values of the weights that make the accuracy better. Moreover, we considered other cells instead of the three modified neighboring cells and find out the effect on the classification accuracy
+
+
+To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how two time series sequences is 
+>>>>>>> 7e349e929b744ca994f5dae79c7cbef8ea56943b
 
 The implemented python codes ```dtw.py``` and ```dtw_p.py``` modified from ```dtw.py``` in [eug/dynamic-time-warping](https://github.com/eug/dynamic-time-warping) 
 
