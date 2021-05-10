@@ -37,15 +37,11 @@ The algorithm that use to match the points is using dynamic programming to find 
 *DTW Distance and Warping Path\
 Credit: Li Y, Liu RW, Liu Z, Liu J. (DOI: [10.1109/ACCESS.2019.2920436](https://doi.org/10.1109/ACCESS.2019.2920436))*
 
-In Sakoe and Chiba (1978)'s paper, they do the research about Spoken-word recognition and proposed the DP-matching principle, the pattern-matching algorithm based on dynamic programming. This algorithm will let the time axis (X-axis) fluctate by using a non-linear time-warping function (modified from DTW algorithm).
+In Sakoe and Chiba (1978)'s paper, they do the research about Spoken-word recognition and proposed the DP-matching principle, the pattern-matching algorithm based on dynamic programming. This algorithm will let the time axis (X-axis) fluctate by using a non-linear time-warping function (modified from DTW algorithm), so that we can ignore the length of the time series sequences that might be difference. 
 
-Due to different speaking rates,a non-linear fluctuation occurs in speech pattern versus time axis, which needs to be eliminated.[25] DP matching is a pattern-matching algorithm based on dynamic programming (DP), which uses a time-normalization effect, where the fluctuations in the time axis are modeled using a non-linear time-warping function, so that we can ignore the length of the time series sequences that might be defference.
-
-เราจะตัดปัญหาการที่ความยาวของ time series ไม่เท่ากันได้ เพราะจะมีการ warping (บิด) แกนเวลาของอันใดอันหนึ่งอยู่แล้ว
-พิจารณา any two speech patterns, we can ช่างแม่ง of their ผลต่างของเวลา มby warping the time axis of one 
-so that the maximal coincidence ความบังเอิญสูงสุด is attained with the other. 
-
-Moreover, if the warping function is allowed to take any possible value, very less[clarify] distinction can be made between words belonging to different categories. So, to enhance the distinction between words belonging to different categories, restrictions were imposed on the warping function slope.
+Nevertheless, the non-linear time-warping function have the topic to consider that are:
+1. ...
+2. ...
 
 ![Caption](img/)\
 *Caption\
