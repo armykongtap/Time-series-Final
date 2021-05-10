@@ -6,11 +6,21 @@ The project is seperated in 2 parts below.
 
 ## Part I: Optimal weight for DTW distance calculation
 
-In the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))
+This part is to experiment the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))
 
-To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how far between two time series sequences. The easiest way to calculating is 
+In classification tasks in the dataset, we will classify the time series datasets into many classes, by considering the distance between the sequences. Thus, before making classification tasks, we have to complete the distance tasks.
 
-![DTW: Dynamic Time Warping](https://upload.wikimedia.org/wikipedia/commons/a/ab/Dynamic_time_warping.png)
+The easiest way to calculate how far between two time series sequences is finding the difference at each pair of the data points from two time series sequences. This method is called Euclidean distance.
+
+![Euclidean distance vs DTW](https://i.imgur.com/tfqoIFR.png)\
+*Euclidean distance\
+Credit: GUNA, J. et al. (DOI: [10.1007/s11042-013-1635-1](https://doi.org/10.1007/s11042-013-1635-1))*
+
+But in many cases, e.g. spoken words (from Sakoe and Chiba (1978)'s paper), the euclidean method will give the inaccurate distance, because this type of time series sequences usually gave the distort shape, so that Euclidean distance might gave the bad results.
+
+One of the accurate way of distance tasks is DTW algorithm. To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how far between two time series sequences. 
+
+![DTW: Dynamic Time Warping](https://upload.wikimedia.org/wikipedia/commons/a/ab/Dynamic_time_warping.png)\
 *Dynamic Time Warping (DTW)\
 Credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:Dynamic_time_warping.png)*
 
