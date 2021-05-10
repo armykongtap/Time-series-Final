@@ -16,13 +16,24 @@ The easiest way to calculate how far between two time series sequences is findin
 *Euclidean distance\
 Credit: GUNA, J. et al. (DOI: [10.1007/s11042-013-1635-1](https://doi.org/10.1007/s11042-013-1635-1))*
 
-But in many cases, e.g. spoken words (from Sakoe and Chiba (1978)'s paper), the euclidean method will give the inaccurate distance, because this type of time series sequences usually gave the distort shape, so that Euclidean distance might gave the bad results.
+However, in many cases, e.g. spoken words (from Sakoe and Chiba (1978)'s paper), the euclidean method will give the inaccurate distance, because this type of time series sequences usually gave the distort shape, so that Euclidean distance might gave the bad results. 
+
+From the picture below, we have to match between peak to peak, this will make sense more than the Euclidean method.
 
 One of the accurate way of distance tasks is DTW algorithm. To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how far between two time series sequences by matching the points that will give the smallest distance.
 
 ![DTW: Dynamic Time Warping](https://upload.wikimedia.org/wikipedia/commons/a/ab/Dynamic_time_warping.png)\
 *Dynamic Time Warping (DTW)\
 Credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:Dynamic_time_warping.png)*
+
+The algorithm that use to match the points is using dynamic programming to find the minimum of considering the previous points that contain cumulative distance. The previous points are left (i - 1, j), bottom (i, j - 1), and bottom-left (i - 1, j - 1) when current point is (i, j).
+
+| <span>| |
+| :----------------: | :---------------: |
+| left<br>(i - 1, j) | **current<br>(i, j)** |
+| bottom-left<br>(i - 1, j - 1) | bottom<br>(i, j - 1)
+
+
 
 In Sakoe and Chiba (1978)'s paper
 
