@@ -48,47 +48,93 @@ Nevertheless, the non-linear time-warping function have the topic to consider th
 Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
 \
 Then, what are the weights that will let the best results for the classification tasks, in term of accurary?\
-We will take the experiment in [Part 1.A](#"Part 1.A")
+We will take the experiment in Part 1.A
 
-2. In this paper, they proposed the DP-algorithm. We have to consider more than the 3 neighboring cells in the minimum-finding candidates\
+2. In this paper, they proposed the DP-algorithm. We have to consider more than the 3 neighboring cells in the minimum-finding candidates.\
+\
 ![DP-algo](img/DP-algo.png)\
 \
 *Symmetric and Asymmetric DP-algorithms with Slope Constraint Condition P = 0, 1/2, 1, and 2\
 From this table, P is the slope constraint of the warping function, that equal to n/m when m is maximum consecutive steps in i-axis (or j-axis), and n is the steps in diagonal line.\
 Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
 \
-Then, instead of considering the 3 neighbouring cells, left, bottom, and bottom-left, is it will have the improved results, in term of accuracy?\
+Then, instead of considering only the 3 neighbouring cells, left, bottom, and bottom-left, is it will have the improved results, in term of accuracy?\
 We will take the experiment in Part 1.B
 
-The implemented python codes ```dtw.py``` and ```dtw_p.py``` modified from ```dtw.py``` in [eug/dynamic-time-warping](https://github.com/eug/dynamic-time-warping) 
+The implemented python codes ```dtw.py``` and ```dtw_P.py``` modified from ```dtw.py``` in [eug/dynamic-time-warping](https://github.com/eug/dynamic-time-warping) 
 
 Our experiment is on the ECG200 datasets, that are attached in this repo.
 
+![ECG200](img/ECG200.png)\
+*ECG200 Train and Test dataset*
+
 We seperated the test into 2 parts.
 
-{: id="Part 1.A"}
 ### Part 1.A: Weighting Coefficient  
 
-In this part, we make an experiment by modifying the weights to find that what is the optimal values of the weights that make the accuracy better.
+In this part, we make an experiment by modifying the weights of the three neighboring cells from 0 to 3 to find that what is the optimal values of the weights that make the accuracy better.
 
+The implemented python code is at [dtw.py](dtw.py).
 
-The summary is, we can't find the optimal values of the weights, but we can find that the weight that have the most significantly affect to the classification accuracy is 
+We have the 64 combinations of the weighting coefficients. The full table is available at [1A_result.csv](1A_results.csv)
 
-### 1.B:
+![1A Results](img/1A_result.png)\
+*The accuracy when change the weighting coefficients*
 
-Moreover, we considered other cells instead of the three modified neighboring cells and find out the effect on the classification accuracy
+The summary is, we can't find the optimal values of the weights, but we can find that the weight that have the most significantly effect to the classification accuracy is the bottom-left weight.
+
+### 1.B: Considering other cells
+
+In this part, we considered other cells instead of the three neighboring cells and find out the effect on the classification accuracy.
+
+The implemented python code is at [dtw_P.py](dtw_P.py).
+
+![1A Results](img/1B_result_1.png)\
+![1A Results](img/1B_result_2.png)\
+*The accuracy when change P in the symmetric and asymmetric forms*
+
+As you can see in the of the symmetric form graph, the more P doesn’t mean that the accuracy will be more higher, at P is 1 let the accuracy higher than P is 2,
+Also, from the symmetric form graph, the best accuracy is at P is 0.5.
+
+From the result, we must set an appropriate P to get the best accuracy, because the larger of P is the more restricted of function. In the other hand, if P is too low, the function is more lax then the discrimination not work well.
 
 ## Part II: Shape averaging method
 
-The part is about shape averaging method of multiple time series sequences. The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
+The part is about shape averaging method of multiple time series sequences.
 
-The implemented python code ```dba.py``` modified from [fpetitjean/DBA](https://github.com/fpetitjean/DBA) based on the papers below
+In averaging method of multiple time series sequences, if we average point-to-point on the time series sequences, we might get the misunderstanding results, as the picture below.
+
+![Arithmetic mean of time series sequences](https://raw.githubusercontent.com/fpetitjean/DBA/master/images/arithmetic.png)\
+*Arithmetic mean of time series sequences\
+Credit: François Petitjean from [DBA](https://github.com/fpetitjean/DBA))*
+
+The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
+
+![DBA of time series sequences](https://raw.githubusercontent.com/fpetitjean/DBA/master/images/DBA.png)\
+*DBA of time series sequences\
+Credit: François Petitjean from [DBA](https://github.com/fpetitjean/DBA))*
+
+The implemented python code is at [dba.py](dba.py), modified from [fpetitjean/DBA](https://github.com/fpetitjean/DBA) based on the papers below.
 * [Pattern Recognition 2011](http://francois-petitjean.com/Research/Petitjean2011-PR.pdf): A global averaging method for Dynamic Time Warping 
 (DOI: [10.1016/j.patcog.2010.09.013](https://doi.org/10.1016/j.patcog.2010.09.013))
 * [ICDM 2014](http://francois-petitjean.com/Research/Petitjean2014-ICDM-DTW.pdf): Dynamic Time Warping Averaging of Time Series allows Faster and more Accurate Classification
 (DOI: [10.1109/ICDM.2014.27](https://doi.org/10.1109/ICDM.2014.27))
 * [ICDM 2017](http://francois-petitjean.com/Research/ForestierPetitjean2017-ICDM.pdf): Generating synthetic time series to augment sparse datasets
 (DOI: [10.1109/ICDM.2017.106](https://doi.org/10.1109/ICDM.2017.106))
+
+This technique begin with finding the **medoid**, the sequence that is the representative of all time series sequences, by calculating the sum of DTW between other sequences. If the datasets is huge, we will randomly select 50 candidates to find the medoid.
+
+When **medoid** is found, we will calculate the average between medoid to each time series sequences in the datasets. First is between medoid and first sequence. Then, between the previous results to the next time series sequence. In this calculation, we will apply the DTW method. We will repeat the averaging calculation to 10 times.
+
+In this part, we have experimented on ECG200 datasets and Gun vs Point datasets. Before starting the DBA, we seperated the dataset into specifed classes.
+
+This is the results from DBA technique.
+
+![ECG200 Shape Averaging](img/2_ECG.png)\
+*ECG200 Shape Averaging*
+
+![Gun VS Point Shape Averaging](img/2_Gun_Point.png)\
+*Gun VS Point Shape Averaging*
 
 ## Members
 1. Kongtap Arunlakvilart 6030033321
