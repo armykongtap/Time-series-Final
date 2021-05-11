@@ -133,7 +133,7 @@ This is the results from DBA technique.
 ![Gun VS Point Shape Averaging](img/2_Gun_Point.png)\
 *Gun VS Point Shape Averaging*
 
-## Members
+## Team Members
 1. Kongtap Arunlakvilart 6030033321
 2. Kantorn Chitchuen 6030038521
 3. Yanika Dontong 6031010021
