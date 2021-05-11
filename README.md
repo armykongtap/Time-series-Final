@@ -28,7 +28,7 @@ Credit: [Programminglinguist on Wikipedia](https://commons.wikimedia.org/wiki/Fi
 
 The algorithm that use to match the points is using dynamic programming to find the minimum of considering the previous points that contain cumulative distance. The previous points are left (i - 1, j), bottom (i, j - 1), and bottom-left (i - 1, j - 1) when current point is (i, j) from the filled distance matrix between two time series sequences. The path that generated from matches data points called warping path.
 
-![the three neighboring cells](img/neighbors.png =300x)\
+<img src="img/neighbors.png" alt="the three neighboring cells" width="200"/>\
 *The three previous neighboring cells*
 
 ![DTW and Warping Path](https://i.imgur.com/9BDwWNw.png)\
