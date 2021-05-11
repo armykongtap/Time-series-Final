@@ -39,31 +39,48 @@ Credit: Li Y, Liu RW, Liu Z, Liu J. (DOI: [10.1109/ACCESS.2019.2920436](https://
 
 In Sakoe and Chiba (1978)'s paper, they do the research about Spoken-word recognition and proposed the DP-matching principle, the pattern-matching algorithm based on dynamic programming. This algorithm will let the time axis (X-axis) fluctate by using a non-linear time-warping function (modified from DTW algorithm), so that we can ignore the length of the time series sequences that might be difference. 
 
-Nevertheless, the non-linear time-warping function have the topic to consider that are:
-1. ...
-2. ...
+Nevertheless, the non-linear time-warping function have the topic to consider that are
 
-![Caption](img/)\
-*Caption\
-Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*
+1. We have to add weighting coefficient when consider the minimum cost of previous points, in the symmatric form and the asymmetric form\
+\
+![Weighting Coefficient](img/weight.png)\
+*Weighting Coefficient\
+Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
+\
+Then, what are the weights that will let the best results for the classification tasks, in term of accurary?\
+We will take the experiment in [Part 1.A](#"Part 1.A")
 
-In this project, we make an experiment by modifying the weights to find that what is the optimal values of the weights that make the accuracy better. Moreover, we considered other cells instead of the three modified neighboring cells and find out the effect on the classification accuracy
+2. In this paper, they proposed the DP-algorithm. We have to consider more than the 3 neighboring cells in the minimum-finding candidates\
+![DP-algo](img/DP-algo.png)\
+\
+*Symmetric and Asymmetric DP-algorithms with Slope Constraint Condition P = 0, 1/2, 1, and 2\
+From this table, P is the slope constraint of the warping function, that equal to n/m when m is maximum consecutive steps in i-axis (or j-axis), and n is the steps in diagonal line.\
+Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
+\
+Then, instead of considering the 3 neighbouring cells, left, bottom, and bottom-left, is it will have the improved results, in term of accuracy?\
+We will take the experiment in Part 1.B
 
 The implemented python codes ```dtw.py``` and ```dtw_p.py``` modified from ```dtw.py``` in [eug/dynamic-time-warping](https://github.com/eug/dynamic-time-warping) 
 
 Our experiment is on the ECG200 datasets, that are attached in this repo.
 
 We seperated the test into 2 parts.
-### 1a: 
+
+{: id="Part 1.A"}
+### Part 1.A: Weighting Coefficient  
+
+In this part, we make an experiment by modifying the weights to find that what is the optimal values of the weights that make the accuracy better.
+
 
 The summary is, we can't find the optimal values of the weights, but we can find that the weight that have the most significantly affect to the classification accuracy is 
 
-### 1b:
+### 1.B:
 
+Moreover, we considered other cells instead of the three modified neighboring cells and find out the effect on the classification accuracy
 
 ## Part II: Shape averaging method
 
-The project is about shape averaging method of multiple time series sequences. The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
+The part is about shape averaging method of multiple time series sequences. The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
 
 The implemented python code ```dba.py``` modified from [fpetitjean/DBA](https://github.com/fpetitjean/DBA) based on the papers below
 * [Pattern Recognition 2011](http://francois-petitjean.com/Research/Petitjean2011-PR.pdf): A global averaging method for Dynamic Time Warping 
