@@ -39,13 +39,13 @@ In Sakoe and Chiba (1978)'s paper, they do the research about Spoken-word recogn
 
 Nevertheless, the non-linear time-warping function have the topic to consider that are
 
-1. We have to add weighting coefficient when consider the minimum cost of previous points, in the symmatric form and the asymmetric form\
+1. We have to add weighting coefficient when consider the minimum cost of previous points, in the symmatric form and the asymmetric form.\
 \
 ![Weighting Coefficient](img/weight.png)\
 *Weighting Coefficient\
 Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
 \
-Then, what are the weights that will let the best results for the classification tasks, in term of accurary?\
+Then, what are the weights that will let the best results for the classification tasks, in term of accuracy?\
 We will take the experiment in Part I.A
 
 2. In this paper, they proposed the DP-algorithm. We have more than the three neighboring cells in the minimum-finding candidates to consider.\
