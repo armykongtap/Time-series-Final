@@ -48,7 +48,7 @@ Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.
 Then, what are the weights that will let the best results for the classification tasks, in term of accurary?\
 We will take the experiment in Part I.A
 
-2. In this paper, they proposed the DP-algorithm. We have to consider more than the 3 neighboring cells in the minimum-finding candidates.\
+2. In this paper, they proposed the DP-algorithm. We have more than the three neighboring cells in the minimum-finding candidates to consider .\
 \
 ![DP-algo](img/DP-algo.png)\
 \
@@ -56,7 +56,7 @@ We will take the experiment in Part I.A
 From this table, P is the slope constraint of the warping function, that equal to n/m when m is maximum consecutive steps in i-axis (or j-axis), and n is the steps in diagonal line.\
 Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
 \
-Then, instead of considering only the 3 neighbouring cells, left, bottom, and bottom-left, is it will have the improved results, in term of accuracy?\
+Then, instead of considering only the three neighbouring cells, left, bottom, and bottom-left, is it will have the improved results, in term of accuracy?\
 We will take the experiment in Part I.B
 
 The implemented python codes ```dtw.py``` and ```dtw_P.py``` modified from ```dtw.py``` in [eug/dynamic-time-warping](https://github.com/eug/dynamic-time-warping) 
@@ -81,7 +81,7 @@ We have the 64 combinations of the weighting coefficients. The full table is ava
 
 The summary is, we can't find the optimal values of the weights, but we can find that the weight that have the most significantly effect to the classification accuracy is the bottom-left weight.
 
-### I.B: Considering other cells
+### Part I.B: Considering other cells
 
 In this part, we considered other cells instead of the three neighboring cells and find out the effect on the classification accuracy.
 
@@ -91,10 +91,9 @@ The implemented python code is at [dtw_P.py](dtw_P.py).
 ![1A Results](img/1B_result_2.png)\
 *The accuracy when change P in the symmetric and asymmetric forms*
 
-As you can see in the of the symmetric form graph, the more P doesn’t mean that the accuracy will be more higher, at P is 1 let the accuracy higher than P is 2,
-Also, from the symmetric form graph, the best accuracy is at P is 0.5.
+As you can see in the of the symmetric form graph, the more P doesn’t mean that the accuracy will be more higher, at P is 1 let the accuracy higher than P is 2. Also, from the asymmetric form graph, the best accuracy is at P is 0.5.
 
-From the result, we must set an appropriate P to get the best accuracy, because the larger of P is the more restricted of function. In the other hand, if P is too low, the function is more lax then the discrimination not work well.
+To summarize, from the results, we must set an appropriate P to get the best accuracy, because the larger of P is the more restricted of function. In the other hand, if P is too low, the function is more lax then the discrimination not work well.
 
 ## Part II: Shape averaging method
 
@@ -120,7 +119,7 @@ The implemented python code is at [dba.py](dba.py), modified from [fpetitjean/DB
 * [ICDM 2017](http://francois-petitjean.com/Research/ForestierPetitjean2017-ICDM.pdf): Generating synthetic time series to augment sparse datasets
 (DOI: [10.1109/ICDM.2017.106](https://doi.org/10.1109/ICDM.2017.106))
 
-This technique begin with finding the approximate **medoid**, the sequence that is the representative of all time series sequences, by calculating the sum of DTW between other sequences. If the datasets is huge, we will randomly select 50 candidates to find the medoid.
+This technique begin with finding the approximate **medoid**, the sequence that is the representative of all time series sequences, by calculating the *sum* of DTW between other sequences. If the datasets is huge, we will randomly select 50 candidates to find the medoid. The medoid is the time series sequence that have minimum *sum*, in other words, it is the minimun distance from others.
 
 When **medoid** is found, we will calculate the average between medoid to each time series sequences in the datasets. First is between medoid and first sequence. Then, between the previous results to the next time series sequence. In this calculation, we will apply the DTW method. We will repeat the averaging calculation to 10 times.
 
