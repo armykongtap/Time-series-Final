@@ -48,7 +48,7 @@ Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.
 Then, what are the weights that will let the best results for the classification tasks, in term of accurary?\
 We will take the experiment in Part I.A
 
-2. In this paper, they proposed the DP-algorithm. We have more than the three neighboring cells in the minimum-finding candidates to consider .\
+2. In this paper, they proposed the DP-algorithm. We have more than the three neighboring cells in the minimum-finding candidates to consider.\
 \
 ![DP-algo](img/DP-algo.png)\
 \
