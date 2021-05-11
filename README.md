@@ -4,9 +4,9 @@ This project is the final project of 2110430 Time Series Mining and Knowledge Di
 
 The project is seperated in 2 parts below.
 
-## Part 1: Optimal weight for DTW distance calculation
+## Part I: Optimal weight for DTW distance calculation
 
-This part is to experiment the DTW distance calculation between two time series sequences, regarding Sakoe and Chiba (1978)'s paper: Dynamic programming algorithm optimization for spoken word recognition (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))
+This part is to experiment the modified DTW distance calculation between two time series sequences, regarding to Sakoe and Chiba (1978)'s paper: Dynamic programming algorithm optimization for spoken word recognition (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055)).
 
 In classification tasks in the dataset, we will classify the time series datasets into many classes, by considering the distance between the sequences. Thus, before making classification tasks, we have to complete the distance tasks.
 
@@ -20,18 +20,16 @@ However, in many cases, e.g. spoken words (from Sakoe and Chiba (1978)'s paper),
 
 From the picture below, we have to match between peak to peak, this will make sense more than the Euclidean method.
 
-One of the accurate way of distance tasks is DTW algorithm. To briefly explain about the algorithm, firstly, the DTW algorithm is the distance function for calculating how far between two time series sequences by matching the points that will give the smallest distance.
+One of the accurate way of distance tasks is DTW algorithm. To briefly explain about the algorithm, the DTW algorithm is the distance function for calculating how far between two time series sequences by matching the points that will give the smallest distance.
 
 ![DTW: Dynamic Time Warping](https://upload.wikimedia.org/wikipedia/commons/a/ab/Dynamic_time_warping.png)\
 *Dynamic Time Warping (DTW)\
-Credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:Dynamic_time_warping.png)*
+Credit: [Programminglinguist on Wikipedia](https://commons.wikimedia.org/wiki/File:Dynamic_time_warping.png)*
 
 The algorithm that use to match the points is using dynamic programming to find the minimum of considering the previous points that contain cumulative distance. The previous points are left (i - 1, j), bottom (i, j - 1), and bottom-left (i - 1, j - 1) when current point is (i, j) from the filled distance matrix between two time series sequences. The path that generated from matches data points called warping path.
 
-| | |
-| :----------------: | :---------------: |
-| left<br>(i - 1, j) | **current<br>(i, j)** |
-| bottom-left<br>(i - 1, j - 1) | bottom<br>(i, j - 1)
+![the three neighboring cells](img/neighbors.png =300x)\
+*The three previous neighboring cells*
 
 ![DTW and Warping Path](https://i.imgur.com/9BDwWNw.png)\
 *DTW Distance and Warping Path\
@@ -48,7 +46,7 @@ Nevertheless, the non-linear time-warping function have the topic to consider th
 Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
 \
 Then, what are the weights that will let the best results for the classification tasks, in term of accurary?\
-We will take the experiment in Part 1.A
+We will take the experiment in Part I.A
 
 2. In this paper, they proposed the DP-algorithm. We have to consider more than the 3 neighboring cells in the minimum-finding candidates.\
 \
@@ -59,7 +57,7 @@ From this table, P is the slope constraint of the warping function, that equal t
 Credit: Sakoe H, Chiba S. (DOI: [10.1109/TASSP.1978.1163055](https://doi.org/10.1109/TASSP.1978.1163055))*\
 \
 Then, instead of considering only the 3 neighbouring cells, left, bottom, and bottom-left, is it will have the improved results, in term of accuracy?\
-We will take the experiment in Part 1.B
+We will take the experiment in Part I.B
 
 The implemented python codes ```dtw.py``` and ```dtw_P.py``` modified from ```dtw.py``` in [eug/dynamic-time-warping](https://github.com/eug/dynamic-time-warping) 
 
@@ -70,7 +68,7 @@ Our experiment is on the ECG200 datasets, that are attached in this repo.
 
 We seperated the test into 2 parts.
 
-### Part 1.A: Weighting Coefficient  
+### Part I.A: Weighting Coefficient  
 
 In this part, we make an experiment by modifying the weights of the three neighboring cells from 0 to 3 to find that what is the optimal values of the weights that make the accuracy better.
 
@@ -83,7 +81,7 @@ We have the 64 combinations of the weighting coefficients. The full table is ava
 
 The summary is, we can't find the optimal values of the weights, but we can find that the weight that have the most significantly effect to the classification accuracy is the bottom-left weight.
 
-### 1.B: Considering other cells
+### I.B: Considering other cells
 
 In this part, we considered other cells instead of the three neighboring cells and find out the effect on the classification accuracy.
 
@@ -102,13 +100,13 @@ From the result, we must set an appropriate P to get the best accuracy, because 
 
 The part is about shape averaging method of multiple time series sequences.
 
-In averaging method of multiple time series sequences, if we average point-to-point on the time series sequences, we might get the misunderstanding results, as the picture below.
+In averaging method of multiple time series sequences, if we average point-to-point on the time series sequences, we might get the misunderstanding results, as the picture below. This method can call arithmetic mean.
 
 ![Arithmetic mean of time series sequences](https://raw.githubusercontent.com/fpetitjean/DBA/master/images/arithmetic.png)\
 *Arithmetic mean of time series sequences\
 Credit: François Petitjean from [DBA](https://github.com/fpetitjean/DBA))*
 
-The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
+To make the average of time series sequences, we might take average to keep the shape of the original time series sequences. The method that using in this project called "DTA: Dynamic Time Warping Barycenter Averaging".
 
 ![DBA of time series sequences](https://raw.githubusercontent.com/fpetitjean/DBA/master/images/DBA.png)\
 *DBA of time series sequences\
@@ -122,11 +120,11 @@ The implemented python code is at [dba.py](dba.py), modified from [fpetitjean/DB
 * [ICDM 2017](http://francois-petitjean.com/Research/ForestierPetitjean2017-ICDM.pdf): Generating synthetic time series to augment sparse datasets
 (DOI: [10.1109/ICDM.2017.106](https://doi.org/10.1109/ICDM.2017.106))
 
-This technique begin with finding the **medoid**, the sequence that is the representative of all time series sequences, by calculating the sum of DTW between other sequences. If the datasets is huge, we will randomly select 50 candidates to find the medoid.
+This technique begin with finding the approximate **medoid**, the sequence that is the representative of all time series sequences, by calculating the sum of DTW between other sequences. If the datasets is huge, we will randomly select 50 candidates to find the medoid.
 
 When **medoid** is found, we will calculate the average between medoid to each time series sequences in the datasets. First is between medoid and first sequence. Then, between the previous results to the next time series sequence. In this calculation, we will apply the DTW method. We will repeat the averaging calculation to 10 times.
 
-In this part, we have experimented on ECG200 datasets and Gun vs Point datasets. Before starting the DBA, we seperated the dataset into specifed classes.
+In this part, we have experimented on ECG200 and Gun VS Point datasets. Before starting the DBA, we seperated the dataset into specifed classes.
 
 This is the results from DBA technique.
 
